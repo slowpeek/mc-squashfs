@@ -12,6 +12,9 @@ the temp dir.
 
 * Installation
 
+The code is based on the =unsquashfs= tool. In Ubuntu it comes with
+=squashfs-tools= package.
+
 *Notice*: Pathes used below are from Ubuntu. It might differ in your distro.
 
 *Notice*: =/etc/mc/mc.ext= is not loaded if =~/.config/mc/mc.ext= exists. So
