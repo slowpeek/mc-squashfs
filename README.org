@@ -4,7 +4,7 @@ This is a SquashFS [[https://github.com/MidnightCommander/mc/blob/master/src/vfs
 explore the content of your =*.squashfs= and =*.sqfs= files the same way you do
 with =zip=, =7z= etc.
 
-*Notice*: When you access some file via the vfs layer in =mc=, the file is
+*Notice*: When you access some file via a vfs layer in =mc=, the file is
 extracted into a temp dir (in order of precedence: =$MC_TMPDIR=, =$TMPDIR=,
 =/tmp=). So, for example, it is not a very bright idea to browse into a big
 squashfs file inside some ISO image: the whole squash would be extracted into
