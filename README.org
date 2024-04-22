@@ -1,0 +1,49 @@
+* About
+
+This is a SquashFS [[https://github.com/MidnightCommander/mc/blob/master/src/vfs/extfs/helpers/README][plugin]] for Midnight Commander. Having it installed, you could
+explore the content of your =*.squashfs= and =*.sqfs= files the same way you do
+with =zip=, =7z= etc.
+
+*Notice*: When you access some file via the vfs layer in =mc=, the file is
+extracted into a temp dir (in order of precedence: =$MC_TMPDIR=, =$TMPDIR=,
+=/tmp=). So, for example, it is not a very bright idea to browse into a big
+squashfs file inside some ISO image: the whole squash would be extracted into
+the temp dir.
+
+* Installation
+
+*Notice*: Pathes used below are from Ubuntu. It might differ in your distro.
+
+*Notice*: =/etc/mc/mc.ext= is not loaded if =~/.config/mc/mc.ext= exists. So
+changes in the former do not apply to users which already have the latter.
+
+** Local (per user)
+
+- save the script under =~/.local/share/mc/extfs.d/= and make sure it is
+  executable
+- in =mc= menu select /Command/, then /Edit extension file/
+- somewhere under =### Archives ###= insert this:
+
+  #+begin_example
+    # .squashfs, .sqfs
+      regex/\.(squashfs|sqfs)$
+          Open=%cd %p/usqfs://
+  #+end_example
+
+  save it and exit the editor
+- restart =mc= to apply the changes
+
+** Global
+
+- save the script under =/usr/lib/mc/extfs.d/= and make sure it is executable
+- open =/etc/mc/mc.ext= in some editor
+- somewhere under =### Archives ###= insert this:
+
+  #+begin_example
+    # .squashfs, .sqfs
+      regex/\.(squashfs|sqfs)$
+          Open=%cd %p/usqfs://
+  #+end_example
+
+  save it and exit the editor
+- restart =mc= to apply the changes
