@@ -4,19 +4,18 @@
 # Homepage: https://github.com/slowpeek/mc-squashfs
 # About: SquashFS plugin for Midnight Commander
 
-do_list() {
-    awk '
+awk_format_list=$(cat <<'EOF'
 # The first line is the "root" dir, skip it
 NR>1 {
-    o=0
+    o = 0
 
     # Special case: block/character device with "size" column matching /major, +minor/
     if (substr($3, length($3)) == ",") {
        # Make it "major,minor"
-       $3=$3 $4
+       $3 = $3 $4
 
        # Step over the "minor" field in the following
-       o=1
+       o = 1
     }
 
     # Split "user/group"
@@ -26,14 +25,14 @@ NR>1 {
     split($(4+o), date, "-")
 
     # Slash in "user/group"
-    i=index($0, "/")
+    i = index($0, "/")
     # Leading slash in the path
-    i+=index(substr($0, i+1), "/")
+    i += index(substr($0, i+1), "/")
 
     print $1, 1, owner[1], owner[2], $3, date[2] "-" date[3] "-" date[1], $(5+o), substr($0, i)
 }
-'
-}
+EOF
+)
 
 if ! command -v unsquashfs >/dev/null; then
     echo 'unsquashfs is not installed' >&2
@@ -45,7 +44,7 @@ shift
 
 case "$cmd" in
     list)
-        unsquashfs -d '' -lls "$1" | do_list ;;
+        unsquashfs -d '' -lls "$1" | awk "$awk_format_list" ;;
     copyout)
         unsquashfs -cat "$1" "$2" > "$3" 2>/dev/null ;;
     *)
