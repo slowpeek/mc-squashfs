@@ -29,7 +29,22 @@ NR>1 {
     # Leading slash in the path
     i += index(substr($0, i+1), "/")
 
-    print $1, 1, owner[1], owner[2], $3, date[2] "-" date[3] "-" date[1], $(5+o), substr($0, i)
+    # The path part
+    s = substr($0, i)
+
+    if (substr($0, 1, 1) == "l") {
+        s1=s
+        if (gsub("->", "", s1) > 1) {
+            # Ambiguity: either the link or its target contains q(->) in
+            # addition to the link/target delimiter
+            next
+        }
+    } else if (index(s, "->")) {
+        # Ambiguity: not a symlink, but there is q(->)
+        next
+    }
+
+    print $1, 1, owner[1], owner[2], $3, date[2] "-" date[3] "-" date[1], $(5+o), s
 }
 EOF
 )
