@@ -17,37 +17,43 @@ The code is based on the =unsquashfs= tool. In Ubuntu it comes with
 
 *Notice*: Pathes used below are from Ubuntu. It might differ in your distro.
 
-*Notice*: =/etc/mc/mc.ext= is not loaded if =~/.config/mc/mc.ext= exists. So
-changes in the global config file do not apply to users which already have the
-local one.
+There are two relevant config files:
+- global =/etc/mc/mc.ext= (*since 4.8.29*: =/etc/mc/mc.ext.ini=)
+- local =~/.config/mc/mc.ext= (*since 4.8.29*: =~/.config/mc/mc.ext.ini=).
 
-** Local (per user)
+*The global config is not loaded if the local one exists.*
 
-- save the script under =~/.local/share/mc/extfs.d/= and make sure it is
-  executable
-- in =mc= menu select /Command/, then /Edit extension file/
-- somewhere under =### Archives ###= insert this:
+Config snippet for this script (check your =mc= version with =F1= key):
+
+- till 4.8.28 ::
 
   #+begin_example
     # .squashfs, .sqfs
-      regex/\.(squashfs|sqfs)$
-          Open=%cd %p/usqfs://
+    regex/\.(squashfs|sqfs)
+        Open=%cd %p/usqfs://
   #+end_example
 
-  save it and exit the editor
+- 4.8.29+ ::
+
+  #+begin_example
+    [squashfs]
+    Regex=\.(squashfs|sqfs)$
+    Open=%cd %p/usqfs://
+  #+end_example
+
+** Local
+
+- put the script under =~/.local/share/mc/extfs.d/= and make sure it is
+  executable
+- in =mc= menu select /Command/, then /Edit extension file/
+- insert the snippet somewhere under =### Archives ###=
+- save it and exit the editor
 - restart =mc= to apply the changes
 
 ** Global
 
-- save the script under =/usr/lib/mc/extfs.d/= and make sure it is executable
-- open =/etc/mc/mc.ext= in some editor
-- somewhere under =### Archives ###= insert this:
-
-  #+begin_example
-    # .squashfs, .sqfs
-      regex/\.(squashfs|sqfs)$
-          Open=%cd %p/usqfs://
-  #+end_example
-
-  save it and exit the editor
+- put the script under =/usr/lib/mc/extfs.d/= and make sure it is executable
+- open =/etc/mc/mc.ext= (*since 4.8.29*: =/etc/mc/mc.ext.ini=) in some editor
+- insert the snippet somewhere under =### Archives ###=
+- save it and exit the editor
 - restart =mc= to apply the changes
