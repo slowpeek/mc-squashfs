@@ -18,7 +18,8 @@ The code is based on the =unsquashfs= tool. In Ubuntu it comes with
 *Notice*: Pathes used below are from Ubuntu. It might differ in your distro.
 
 *Notice*: =/etc/mc/mc.ext= is not loaded if =~/.config/mc/mc.ext= exists. So
-changes in the former do not apply to users which already have the latter.
+changes in the global config file do not apply to users which already have the
+local one.
 
 ** Local (per user)
 
