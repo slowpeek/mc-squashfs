@@ -4,6 +4,11 @@
 # Homepage: https://github.com/slowpeek/mc-squashfs
 # About: SquashFS plugin for Midnight Commander
 
+bye() {
+    printf '%s\n' "$1" >&2
+    exit 1
+}
+
 awk_format_list=$(cat <<'EOF'
 # The first line is the "root" dir, skip it
 NR>1 {
@@ -49,10 +54,8 @@ NR>1 {
 EOF
 )
 
-if ! command -v unsquashfs >/dev/null; then
-    echo 'unsquashfs is not installed (squashfs-tools package)' >&2
-    exit 1
-fi
+command -v unsquashfs >/dev/null ||
+    bye 'unsquashfs is not installed (squashfs-tools package)'
 
 cmd=$1
 shift
