@@ -10,8 +10,7 @@ bye() {
 }
 
 awk_format_list=$(cat <<'EOF'
-# The first line is the "root" dir, skip it
-NR>1 {
+{
     o = 0
 
     # Special case: block/character device with "size" column matching /major, +minor/
@@ -68,7 +67,10 @@ case "$cmd" in
 
         unsquashfs -d '' -lls "$1" > "$temp_ls" || exit
 
-        awk "$awk_format_list" < "$temp_ls"
+        # The first line is /, skip it
+        tail -n+2 "$temp_ls" |
+            awk "$awk_format_list"
+
         exit ;;
 
     copyout)
