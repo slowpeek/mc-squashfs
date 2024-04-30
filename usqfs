@@ -50,7 +50,7 @@ EOF
 )
 
 if ! command -v unsquashfs >/dev/null; then
-    echo 'unsquashfs is not installed' >&2
+    echo 'unsquashfs is not installed (squashfs-tools package)' >&2
     exit 1
 fi
 
@@ -59,11 +59,19 @@ shift
 
 case "$cmd" in
     list)
-        unsquashfs -d '' -lls "$1" | awk "$awk_format_list" ;;
+        temp_ls=$(mktemp "${MC_TMPDIR:-/tmp}"/mc-usqfs.XXXXXX) || exit
+        # shellcheck disable=SC2064
+        trap "rm -f '${temp_ls}'" EXIT
+
+        unsquashfs -d '' -lls "$1" > "$temp_ls" || exit
+
+        awk "$awk_format_list" < "$temp_ls"
+        exit ;;
+
     copyout)
-        unsquashfs -cat "$1" "$2" > "$3" 2>/dev/null ;;
+        unsquashfs -cat "$1" "$2" > "$3" 2>/dev/null
+        exit ;;
+
     *)
         exit 1 ;;
 esac
-
-exit 0
