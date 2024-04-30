@@ -74,7 +74,7 @@ case "$cmd" in
         exit ;;
 
     copyout)
-        unsquashfs -cat "$1" "$2" > "$3" 2>/dev/null
+        unsquashfs -cat "$1" "$2" > "$3"
         exit ;;
 
     *)
