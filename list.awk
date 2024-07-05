@@ -6,11 +6,11 @@ NR>1 {
 
     # Special case: block/character device with "size" column matching /major, +minor/
     if (substr($3, length($3)) == ",") {
-       # Make it "major,minor"
-       $3 = $3 $4
+        # Make it "major,minor"
+        $3 = $3 $4
 
-       # Step over the "minor" field in the following
-       o = 1
+        # Step over the "minor" field in the following
+        o = 1
     }
 
     # Split "user/group"
