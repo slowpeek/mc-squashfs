@@ -43,8 +43,8 @@ Config snippet for this script (check your =mc= version with =F1= key):
 
 ** Local
 
-- put the script under =~/.local/share/mc/extfs.d/= and make sure it is
-  executable
+- extract the archive or clone the repo somewhere
+- point =~/.local/share/mc/extfs.d/usqfs= symlink to the script
 - in =mc= menu select /Command/, then /Edit extension file/
 - insert the snippet somewhere under =### Archives ###=
 - save it and exit the editor
@@ -52,7 +52,8 @@ Config snippet for this script (check your =mc= version with =F1= key):
 
 ** Global
 
-- put the script under =/usr/lib/mc/extfs.d/= and make sure it is executable
+- extract the archive or clone the repo somewhere
+- point =~/usr/lib/mc/extfs.d/usqfs= symlink to the script
 - open =/etc/mc/mc.ext= (*since 4.8.29*: =/etc/mc/mc.ext.ini=) in some editor
 - insert the snippet somewhere under =### Archives ###=
 - save it and exit the editor
