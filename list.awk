@@ -1,4 +1,7 @@
-{
+# This script expects raw output of `unsquashfs -d '' -lls ..`. The first line
+# is for the root dir, thats why there is NR>1 condition.
+
+NR>1 {
     o = 0
 
     # Special case: block/character device with "size" column matching /major, +minor/

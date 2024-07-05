@@ -25,8 +25,7 @@ case "$cmd" in
 
         unsquashfs -d '' -lls "$1" > "$lls_out" || exit
 
-        # The first line is /, skip it
-        tail -n+2 "$lls_out" | awk -f "$INC"/list.awk ;;
+        awk -f "$INC"/list.awk < "$lls_out" ;;
     copyout)
         unsquashfs -cat "$1" "$2" > "$3" ;;
     *)
