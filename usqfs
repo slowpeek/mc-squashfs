@@ -19,14 +19,14 @@ shift
 
 case "$cmd" in
     list)
-        temp_ls=$(mktemp "${MC_TMPDIR:-/tmp}"/mc-usqfs.XXXXXX) || exit
+        lls_out=$(mktemp "${MC_TMPDIR:-/tmp}"/mc-usqfs.XXXXXX) || exit
         # shellcheck disable=SC2064
-        trap "rm -f '${temp_ls}'" EXIT
+        trap "rm -f '${lls_out}'" EXIT
 
-        unsquashfs -d '' -lls "$1" > "$temp_ls" || exit
+        unsquashfs -d '' -lls "$1" > "$lls_out" || exit
 
         # The first line is /, skip it
-        tail -n+2 "$temp_ls" | awk -f "$INC"/list.awk ;;
+        tail -n+2 "$lls_out" | awk -f "$INC"/list.awk ;;
     copyout)
         unsquashfs -cat "$1" "$2" > "$3" ;;
     *)
