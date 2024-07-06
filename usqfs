@@ -24,10 +24,12 @@ case "$cmd" in
         trap "rm -f '${lls_out}'" EXIT
 
         unsquashfs -d '' -lls "$1" > "$lls_out" || exit
-
-        awk -f "$INC"/list.awk < "$lls_out" ;;
+        awk -f "$INC"/list.awk < "$lls_out"
+        ;;
     copyout)
-        unsquashfs -cat "$1" "$2" > "$3" ;;
+        unsquashfs -cat "$1" "$2" > "$3"
+        ;;
     *)
-        exit 1 ;;
+        exit 1
+        ;;
 esac
